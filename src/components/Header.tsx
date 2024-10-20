@@ -17,7 +17,9 @@ import {
 } from "./ui/sheet";
 import { Link } from "react-router-dom";
 
-const user = true;
+const user = {
+  _id: "",
+};
 
 const Header = () => {
   return (
@@ -26,7 +28,7 @@ const Header = () => {
         <img className="w-[4rem]" src="/meetme.png" alt="Icon" />
       </div>
 
-      {user ? (
+      {user._id ? (
         <>
           <div className="flex items-center gap-8">
             {/* Drawer */}

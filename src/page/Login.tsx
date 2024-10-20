@@ -2,13 +2,57 @@ import { Label } from "@/components/ui/label";
 import { FcGoogle } from "react-icons/fc";
 
 import { useState } from "react";
+import { useLoginMutation } from "@/redux/api/userAPI";
+import { toast } from "sonner";
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { auth } from "@/firebase";
+import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
+import { MessageResponse } from "@/types/apiType";
 
 const Login = () => {
   const [gender, setGender] = useState("");
   const [date, setDate] = useState("");
 
-  const loginHandler = () => {
-    console.log("login");
+  const [login] = useLoginMutation();
+
+  const loginHandler = async () => {
+    try {
+      const provider = new GoogleAuthProvider();
+      const { user } = await signInWithPopup(auth, provider);
+
+      const res = await login({
+        name: user.displayName!,
+        email: user.email!,
+        photo: user.photoURL!,
+        gender,
+        role: "user",
+        dob: date,
+        _id: user.uid,
+      });
+
+      if ("data" in res) {
+        toast.success(res.data!.message, {
+          style: {
+            backgroundColor: "inherit",
+            color: "white",
+          },
+        });
+      } else {
+        const error = res.error as FetchBaseQueryError;
+        const message = (error.data as MessageResponse).message;
+
+        toast.error(message, {
+          style: { backgroundColor: "inherit", color: "white" },
+        });
+      }
+
+      setDate("");
+      setGender("");
+    } catch (error) {
+      toast.error("SignIN failed", {
+        style: { backgroundColor: "inherit", color: "white" },
+      });
+    }
   };
 
   return (

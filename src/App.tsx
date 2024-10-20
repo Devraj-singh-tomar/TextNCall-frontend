@@ -1,6 +1,7 @@
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import "./App.css";
 import { lazy, Suspense } from "react";
+import { Toaster } from "sonner";
 
 const Login = lazy(() => import("./page/Login"));
 const ChatPage = lazy(() => import("./page/ChatPage"));
@@ -17,6 +18,7 @@ const App = () => {
           <Route path="/chats" element={<ChatPage />} />
         </Routes>
       </Suspense>
+      <Toaster position="bottom-center" closeButton />
     </Router>
   );
 };
