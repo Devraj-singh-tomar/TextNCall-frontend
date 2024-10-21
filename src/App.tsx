@@ -9,6 +9,7 @@ import { auth } from "./firebase";
 import { getUser } from "./redux/api/userAPI";
 import { userExist, userNotExist } from "./redux/reducers/userReducer";
 import ProtectedRoute from "./components/ProtectedRoute";
+import Loader from "./components/loader";
 
 const Login = lazy(() => import("./page/Login"));
 const ChatPage = lazy(() => import("./page/ChatPage"));
@@ -32,10 +33,10 @@ const App = () => {
   }, []);
 
   return loading ? (
-    <>loading...</>
+    <Loader />
   ) : (
     <Router>
-      <Suspense fallback={"loading..."}>
+      <Suspense fallback={<Loader />}>
         <Routes>
           {/* not logged in route */}
           <Route

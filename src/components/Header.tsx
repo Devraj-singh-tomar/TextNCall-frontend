@@ -1,9 +1,22 @@
-import { PiBell } from "react-icons/pi";
+import { auth } from "@/firebase";
+import { RootState } from "@/redux/store";
+import { signOut } from "firebase/auth";
+import { FaRegUserCircle } from "react-icons/fa";
 import { GoSearch } from "react-icons/go";
+import { PiBell } from "react-icons/pi";
+import { useSelector } from "react-redux";
+import { toast } from "sonner";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Button } from "./ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuTrigger,
+} from "./ui/dropdown-menu";
 import { Input } from "./ui/input";
-
+import { Separator } from "./ui/separator";
 import {
   Sheet,
   SheetClose,
@@ -14,20 +27,10 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "./ui/sheet";
-import { Link } from "react-router-dom";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuTrigger,
-} from "./ui/dropdown-menu";
-import { Separator } from "./ui/separator";
-import { toast } from "sonner";
-import { signOut } from "firebase/auth";
-import { auth } from "@/firebase";
 
 const Header = () => {
+  const { user } = useSelector((state: RootState) => state.userReducer);
+
   const logoutHandler = async () => {
     try {
       await signOut(auth);
@@ -101,10 +104,17 @@ const Header = () => {
               className="bg-[#1F1F1F] p-2 rounded-full hover:bg-zinc-800"
             >
               <Avatar className="w-7 h-7">
-                <AvatarImage src="" alt="user" />
-                <AvatarFallback className="text-black font-bold bg-[#B49BC8]">
-                  C
-                </AvatarFallback>
+                {user?.photo ? (
+                  <AvatarImage src={user?.photo} alt="user" />
+                ) : (
+                  <AvatarFallback className="text-black font-bold bg-[#B49BC8]">
+                    {user?.name ? (
+                      user.name.charAt(0).toUpperCase()
+                    ) : (
+                      <FaRegUserCircle fontSize={22} />
+                    )}
+                  </AvatarFallback>
+                )}
               </Avatar>
             </button>
           </DropdownMenuTrigger>
