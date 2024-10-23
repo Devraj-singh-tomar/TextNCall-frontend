@@ -60,9 +60,7 @@ const Login = () => {
       <div className="flex flex-col gap-8 items-center">
         <div className="flex flex-col items-center gap-2">
           <h1 className="text-4xl">Welcome to TextNCall</h1>
-          <code className="text-sm text-zinc-400">
-            Effortless Chatting and Video Calling
-          </code>
+          <code className="text-sm text-zinc-400">Your Communication Hub</code>
         </div>
 
         <img className="w-44" src="/meetme.png" alt="" />

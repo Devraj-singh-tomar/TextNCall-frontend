@@ -11,7 +11,6 @@ import { Button } from "./ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
@@ -109,7 +108,7 @@ const Header = () => {
                 ) : (
                   <AvatarFallback className="text-black font-bold bg-[#B49BC8]">
                     {user?.name ? (
-                      user.name.charAt(0).toUpperCase()
+                      user?.name.charAt(0).toUpperCase()
                     ) : (
                       <FaRegUserCircle fontSize={22} />
                     )}
@@ -119,25 +118,26 @@ const Header = () => {
             </button>
           </DropdownMenuTrigger>
           <DropdownMenuContent className="w-52 bg-inherit text-white flex flex-col gap-2 p-2 mt-3 border-zinc-400">
-            <DropdownMenuLabel className="text-center text-zinc-400">
-              My Account
+            <DropdownMenuLabel className="text-center text-zinc-400 truncate">
+              {/* My Account */}
+              {user?.name}
             </DropdownMenuLabel>
 
             <Separator className="bg-zinc-500 w-[10rem] mx-auto " />
 
-            <DropdownMenuItem className="cursor-pointer hover:bg-[#1F1F1F] ">
+            <span className="cursor-pointer text-center hover:bg-zinc-800 rounded-sm  p-1 font-medium">
               {/* Or change Link to Dialog */}
-              My Profile
-            </DropdownMenuItem>
+              Update Profile
+            </span>
 
             <Separator className="bg-zinc-500 w-[10rem] mx-auto " />
 
-            <DropdownMenuItem
+            <span
               onClick={logoutHandler}
-              className="cursor-pointer hover:bg-[#1F1F1F]"
+              className="cursor-pointer text-center hover:bg-zinc-800 rounded-sm p-1  font-medium"
             >
-              Log out
-            </DropdownMenuItem>
+              Logout
+            </span>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
